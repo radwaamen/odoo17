@@ -1,0 +1,8 @@
+.header_custom table theader > tr > th {
+background-color: #7BD3EA !important;
+color: red !important;
+}
+
+.header_custom table theader > tr > th:nth-child(2) {
+width: 500px !important;
+}
