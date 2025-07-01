@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Template header-->
+        <template id="sale_custom_headers_layout">
+            <div class="header row">
+                <div class="col-6">
+                    <div>
+                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 50px;" alt="Logo" />
+
+                    </div>
+                    <div>
+                        <span t-if="docs.company_id.street" t-field="docs.company_id.street"/>
+                        <br/>
+                        <span t-if="docs.company_id.city" t-field="docs.company_id.city"/>
+                        <span t-if="docs.company_id.zip" t-field="docs.company_id.zip"/>,
+                        <br/>
+                        Tel:
+                        <span t-if="docs.company_id.phone" t-field="docs.company_id.phone"/>
+                        <br/>
+                        VAT:
+                        <span t-if="docs.company_id.vat" t-field="docs.company_id.vat"/>
+                    </div>
+                </div>
+                <div class="col-6" style="margin-top:0px">
+                    <h4 style="text-align:center;">
+                        <strong>Sales Quotation</strong>
+                    </h4>
+                    <table class="table" style="border-collapse: collapse;font-size:10px;height:10%">
+                        <tr style="line-height: 2px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Quote</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.name"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 2px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>SalesMan</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.user_id.name"/>
+                            </td>
+                        </tr>
+
+                        <tr style="line-height: 2px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>SalesMan Email</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.user_id.work_email"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 2px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Date</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.date_order"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 3px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Expiry Date</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.validity_date"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 3px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Payment Terms</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.payment_term_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 3px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Country</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.company_id.country_id.name"/>
+                            </td>
+                        </tr>
+                        <tr style="line-height: 3px;">
+                            <td colspan="2" style="border: 1px solid black;background-color: #e9ecef;">
+                                <span>Currency</span>
+                            </td>
+                            <td colspan="4" style="border: 1px solid black;">
+                                <span t-field="doc.currency_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </template>
+        <!--Template footer-->
+        <template id="custom_footer_layout_purchase">
+            <div class="footer">
+                <div class="col-xs-12 pull-left">
+                    <!--                    <span>This is our custom footer</span>-->
+                </div>
+            </div>
+        </template>
+        <!--Bridge template-->
+        <template id="custom_bridge_layout_purchase"><!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+
+            <!--call to the header template--><!-- t-call = "module_name.header template id"-->
+            <t t-call="sale_print.sale_custom_headers_layout"/><!--call to the body template-->
+            <div class="article">
+                <t t-raw="0"/>
+            </div><!--call to the footer template-->
+            <t t-call="sale_print.custom_footer_layout_purchase"/>
+        </template>
+    </data>
+</odoo>
