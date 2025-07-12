@@ -1,0 +1,10 @@
+<data>
+    <template id="report_payslip" inherit_id="hr_payroll.report_payslip">
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/table[1]/thead[1]/tr[1]/th[4]" position="replace">
+                <th>Actual Number Of Hours</th>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/table[1]/tbody[1]/span[1]//tr[1]/td[4]" position="replace">
+            <td><span t-field="worked_days.actual_no_of_hours"/></td>
+        </xpath>
+    </template>
+</data>

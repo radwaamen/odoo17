@@ -1,0 +1,130 @@
+<data>
+    <report id="attendance_sheet_report"
+            model="attendance.sheet"
+            string="Attendance Sheet"
+            report_type="qweb-pdf"
+            name="rm_hr_attendance_sheet.attendance_sheet_template"
+            file="rm_hr_attendance_sheet.attendance_sheet_template"
+            attachment_use="True"
+            attachment="(object.name or '')+' '+ time.strftime('%d,%b %Y %I:%M %p')"
+    />
+
+    <template id="attendance_sheet_template">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.html_container">
+          <t t-call="web.external_layout">
+            <div class="page">
+                <div style="border-radius: 20px 20px 20px 20px; border:2px solid black;width:100%;font-size:14px;font-weight: bold;" >
+                    <table class="text-right" style="width: 100%;">
+                        <tr>
+                            <th class="text-center" height="10" colspan="4"> </th>
+
+                        </tr>
+                        <tr>
+                            <th class="text-center" height="35" style="width:15%;">Sheet No : </th>
+                            <th class="text-center" height="35" style="width:50%;"><span t-field="o.name"/></th>
+                            <th class="text-center" height="35" style="width:15%;"> Employee Name: </th>
+                            <th class="text-center" height="35" style="width:20%;"><span t-field="o.employee_id"/></th>
+
+                        </tr>
+                        <tr>
+                            <th class="text-center" height="35" style="width:15%;">Date From :</th>
+                            <th class="text-center" height="35" style="width:50%;"><span t-field="o.date_from"/></th>
+                            <th class="text-center" height="35" style="width:15%;"> Date To : </th>
+                            <th class="text-center" height="35" style="width:20%;"><span t-field="o.date_to"/></th>
+
+
+                        </tr>
+
+                    </table>
+                </div>
+                <br/>
+
+                <table style="border:1px;width:100%; font-size:14px;font-weight: bold;">
+                    <thead style="background-color:#E0E0E0">
+                        <tr>
+                            <th class="text-center" style="border:2px solid black;width:3%;">No</th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Date </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Day </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">PL/IN </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">PL/OUT </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">ACT/IN </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">ACT/OUT </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Worked/H </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">ACT Late  </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Late </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">ACT Overtime </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Overtime </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">ACT Diff Time </th>
+                            <th class="text-center" style="border:2px solid black;width:6%; ">Diff Time </th>
+                            <th class="text-center" style="border:2px solid black;width:9%; ">Status </th>
+                            <th class="text-center" style="border:2px solid black;width:10%; ">Note </th>
+                        </tr>
+                    </thead>
+                    <t t-set="ndx" t-value="0"/>
+                    <t t-foreach="o.line_ids" t-as="line">
+                        <t t-set="ndx" t-value="ndx + 1"/>
+                        <tr>
+                            <td class="text-center" style="border:1px solid black;"><span t-esc="ndx"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.date"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.day"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.pl_sign_in"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.pl_sign_out"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.ac_sign_in"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.ac_sign_out"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.worked_hours"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.act_late_in"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.late_in"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.act_overtime"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.overtime"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.act_diff_time"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.diff_time"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.status"/></td>
+                            <td class="text-center" style="border:1px solid black;"><span t-field="line.note"/></td>
+
+                        </tr>
+
+                    </t>
+                </table>
+                <br/>
+                <table style="border:1px;width:100%; font-size:14px;font-weight: bold;">
+                    <thead style="background-color:#E0E0E0">
+                        <tr>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> No Of Overtime : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.no_overtime"/></th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> Total Overtime : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.tot_overtime"/></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> No Of ABSENCE : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.no_absence"/></th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> Total ABSENCE : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.tot_absence"/></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> No Of LATE IN : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.no_late"/></th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> Total LATE IN : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.tot_late"/></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> No Of DIFFERENCE TIME : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.no_difftime"/></th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"> Total DIFFERENCE TIME : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.tot_difftime"/></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="border:2px solid black; width:75%;"> No Of UNPAID LEAVE : </th>
+                            <th class="text-center" style="border:2px solid black; width:25%;"><span t-field="o.tot_unpaid"/></th>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+    
+</data>

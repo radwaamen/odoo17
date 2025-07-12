@@ -1,0 +1,13 @@
+<data>
+    <record id="inherit_hr_payslip_form" model="ir.ui.view">
+        <field name="name">inherit.hr.payslip.form</field>
+        <field name="model">hr.payslip</field>
+        <!--<field name="groups_id" eval="[(4, ref(''))]"/>-->
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_days_line_ids']//tree//field[@name='number_of_days']" position="before">
+                <field name="actual_no_of_hours" widget="float_time" sum="Total Actual Working Hours" readonly="1" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+</data>
